@@ -1,0 +1,20 @@
+# datasets, model binaries, third-party repos
+data/
+external/
+
+# secrets — never commit
+.secrets/
+*.env
+.git-credentials
+kaggle.json
+
+# python
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+*.pkl
+*.joblib
+*.pt
+
+# os
+.DS_Store

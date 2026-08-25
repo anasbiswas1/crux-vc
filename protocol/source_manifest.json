@@ -1,0 +1,30 @@
+{
+  "source_url": "https://github.com/datahoarder/crunchbase-october-2013.git",
+  "checked_out_commit": "9303ebdc38fd6dbaa597e12a81edeec0246a61e2",
+  "files": {
+    "LICENSE.txt": {
+      "sha256": "7fd8d671bc25d84b71444a8b40f83b58a2006a4072fe010b19297807910dbede",
+      "bytes": 1195
+    },
+    "README.md": {
+      "sha256": "fb566d461af312b55b148325b8a9a5e543ab15dc541e9c447cf02e88e4db0c33",
+      "bytes": 1967
+    },
+    "crunchbase-acquisitions.csv": {
+      "sha256": "c3fb008fa75c48cafea7bdbd4eca050c11a55383d558998d349433f201b9f779",
+      "bytes": 851415
+    },
+    "crunchbase-companies.csv": {
+      "sha256": "83217e8165db15124aec2799f5f28bda910ab09cc1ed9553b066eb97f60f195d",
+      "bytes": 2544744
+    },
+    "crunchbase-investments.csv": {
+      "sha256": "8f13f28d35915633c0a814dd22d49540ee115717d10d387ebc3a49183a35b65f",
+      "bytes": 10339663
+    },
+    "crunchbase-rounds.csv": {
+      "sha256": "1b27a2b561678fe6257556d729819edc98a9581b18d6d8fad82413658e055212",
+      "bytes": 3703409
+    }
+  }
+}
