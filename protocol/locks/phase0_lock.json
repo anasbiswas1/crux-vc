@@ -1,0 +1,22 @@
+{
+  "audit_case_ids_sha256": "97845ba47d9109c04be231f1313c71e99fd6a1c74b0a7d946b05d2e2af1d3aab",
+  "author_email": "up2082724@myport.ac.uk",
+  "background_ids_sha256": "ee62e0658e3c1dc75ec37dace0193a1853520d0849acc54b46c1b9697777b2ec",
+  "cohort_sha256": "308bc0637f8ab7010aaccf31d3178660012f2734771278f8ce5d2b81f970f96a",
+  "content_sha256": "5ff4a48d90dc0b9d486bd48e68e13388186ae64f3e001ef37c4649c5838fae43",
+  "count_differences": [],
+  "counts_sha256": "a456c555511a8528685258ea4905da1b5ce226fec4c39e47ae480e4535943fc4",
+  "created_at_utc": "2026-09-07T14:47:31.236594+00:00",
+  "feature_ledger_sha256": "caf5904becb0dacfbe5d8d55b8fbf33b12129b5d6cfd5eda909427d957486c71",
+  "final_test_model_results_opened": false,
+  "folds_sha256": "a2839b8185a3ce00ca216e572de49eb0a27a3b281adff87c280106becfe37077",
+  "gates_sha256": "a036f32aee043d5543e9f608a124dbbfdca2a3ae11fbf3b0878ee6ed0d670ee0",
+  "hmac_sha256": "5af6fa84a9da80b54588a3e1f4f8b14b39a2a5f776401d9bc5645f71bcfd0dd0",
+  "lock_type": "phase0",
+  "preregistration_sha256": "bbd0be4ddcf0e1604f7fa88718ff0129d494e22ccda6071e0eec88409cfd91d8",
+  "protocol_version": "2.2",
+  "signature_scheme": "HMAC-SHA256",
+  "source_manifest_sha256": "1d043b6906ff39494b057c47f1b515b42adef87e8ce3d09fdf83226d3d8f7a48",
+  "split_ids_sha256": "626576653a5070809af5517053bf7b4887864d967d1bd9e48c381b9a7e6f1a2f",
+  "strict_features_sha256": "5a7040466758f6473a3ae994394400c409c512f0eecb5254521e24088d65e90c"
+}

@@ -1,0 +1,24 @@
+{
+  "column_count": 3,
+  "columns": [
+    {
+      "dtype": "object",
+      "name": "background_id",
+      "nullable": false
+    },
+    {
+      "dtype": "int64",
+      "name": "order",
+      "nullable": false
+    },
+    {
+      "dtype": "int64",
+      "name": "case_id",
+      "nullable": false
+    }
+  ],
+  "file_sha256": "ee62e0658e3c1dc75ec37dace0193a1853520d0849acc54b46c1b9697777b2ec",
+  "metadata": {},
+  "row_count": 300,
+  "schema_hash": "f4bf127c02de79dfb38c7c36fa682f91fc7907bc1a654410fcefdb308daa0ca5"
+}

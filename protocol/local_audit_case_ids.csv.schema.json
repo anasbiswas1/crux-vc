@@ -1,0 +1,39 @@
+{
+  "column_count": 6,
+  "columns": [
+    {
+      "dtype": "int64",
+      "name": "case_id",
+      "nullable": false
+    },
+    {
+      "dtype": "object",
+      "name": "landmark_round_type",
+      "nullable": false
+    },
+    {
+      "dtype": "object",
+      "name": "joint_outcome_pattern",
+      "nullable": false
+    },
+    {
+      "dtype": "object",
+      "name": "audit_stratum",
+      "nullable": false
+    },
+    {
+      "dtype": "float64",
+      "name": "design_weight",
+      "nullable": false
+    },
+    {
+      "dtype": "float64",
+      "name": "audit_inclusion_probability",
+      "nullable": false
+    }
+  ],
+  "file_sha256": "97845ba47d9109c04be231f1313c71e99fd6a1c74b0a7d946b05d2e2af1d3aab",
+  "metadata": {},
+  "row_count": 300,
+  "schema_hash": "4e57c7174201b1549bf063df240a6bc3b7f882c869ca7a32d452c5e4081cad90"
+}

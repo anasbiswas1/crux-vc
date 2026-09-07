@@ -1,0 +1,34 @@
+{
+  "column_count": 5,
+  "columns": [
+    {
+      "dtype": "object",
+      "name": "fold_id",
+      "nullable": false
+    },
+    {
+      "dtype": "object",
+      "name": "role",
+      "nullable": false
+    },
+    {
+      "dtype": "int64",
+      "name": "case_id",
+      "nullable": false
+    },
+    {
+      "dtype": "string",
+      "name": "company_permalink",
+      "nullable": false
+    },
+    {
+      "dtype": "datetime64[ns]",
+      "name": "t0",
+      "nullable": false
+    }
+  ],
+  "file_sha256": "a2839b8185a3ce00ca216e572de49eb0a27a3b281adff87c280106becfe37077",
+  "metadata": {},
+  "row_count": 4839,
+  "schema_hash": "d9de91cd4c65eed2c6311bf662a97797d0ad33717273279b0c45e504b2cbdbff"
+}

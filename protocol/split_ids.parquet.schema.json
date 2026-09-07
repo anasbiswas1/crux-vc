@@ -1,0 +1,29 @@
+{
+  "column_count": 4,
+  "columns": [
+    {
+      "dtype": "int64",
+      "name": "case_id",
+      "nullable": false
+    },
+    {
+      "dtype": "string",
+      "name": "company_permalink",
+      "nullable": false
+    },
+    {
+      "dtype": "datetime64[ns]",
+      "name": "t0",
+      "nullable": false
+    },
+    {
+      "dtype": "category",
+      "name": "time_block",
+      "nullable": false
+    }
+  ],
+  "file_sha256": "626576653a5070809af5517053bf7b4887864d967d1bd9e48c381b9a7e6f1a2f",
+  "metadata": {},
+  "row_count": 4234,
+  "schema_hash": "1215c1751e2743f119d853d74b5dec647c917437e89f42439e38a48154681a71"
+}
