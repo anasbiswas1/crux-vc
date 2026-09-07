@@ -1,0 +1,43 @@
+feature,availability_class,source_time_rule,feature_set,approved
+landmark_amount_usd,event-timed,aggregated exact landmark funding event,strict,True
+log1p_landmark_amount_usd,event-timed,landmark amount,strict,True
+landmark_amount_missing,event-timed,landmark event,strict,True
+landmark_amount_conflict,event-timed,same date/type source rows,strict,True
+landmark_round_type,event-timed,exact landmark event,strict,True
+landmark_investor_count,event-timed,matched landmark investment edges,strict,True
+landmark_investor_edge_missing,event-timed,matched landmark investment edges,strict,True
+investor_prior_event_count_mean,event-timed,investment edges strictly before t0,strict,True
+investor_prior_event_count_max,event-timed,investment edges strictly before t0,strict,True
+investor_prior_company_count_mean,event-timed,investment edges strictly before t0,strict,True
+investor_prior_company_count_max,event-timed,investment edges strictly before t0,strict,True
+investor_prior_degree_mean,event-timed,co-investment graph strictly before t0,strict,True
+investor_prior_degree_max,event-timed,co-investment graph strictly before t0,strict,True
+investor_prior_weighted_degree_mean,event-timed,co-investment graph strictly before t0,strict,True
+investor_prior_weighted_degree_max,event-timed,co-investment graph strictly before t0,strict,True
+landmark_year,event-timed,t0,strict,True
+landmark_quarter,event-timed,t0,strict,True
+market_deal_count_90d,event-timed,events strictly before t0,strict,True
+market_deal_count_365d,event-timed,events strictly before t0,strict,True
+market_median_amount_365d,event-timed,events strictly before t0,strict,True
+event_source_conflict_count,event-timed,landmark event quality,strict,True
+founding_age_days,snapshot-static with uncertain historical availability,company snapshot,extended,True
+founding_date_missing,snapshot-static with uncertain historical availability,company snapshot,extended,True
+founding_date_invalid,snapshot-static with uncertain historical availability,company snapshot,extended,True
+category_code,snapshot-static with uncertain historical availability,company snapshot,extended,True
+country_code,snapshot-static with uncertain historical availability,company snapshot,extended,True
+region,snapshot-static with uncertain historical availability,company snapshot,extended,True
+landmark_investor_country_count,snapshot-static with uncertain historical availability,investor snapshot,extended,True
+landmark_investor_metadata_missing_rate,snapshot-static with uncertain historical availability,investor snapshot,extended,True
+category_deal_count_365d,snapshot-static with uncertain historical availability,category tags plus prior events,extended,True
+category_median_amount_365d,snapshot-static with uncertain historical availability,category tags plus prior events,extended,True
+region_deal_count_365d,snapshot-static with uncertain historical availability,region tags plus prior events,extended,True
+region_median_amount_365d,snapshot-static with uncertain historical availability,region tags plus prior events,extended,True
+company_metadata_missing_count,snapshot-static with uncertain historical availability,company snapshot,extended,True
+acquisition_price,prohibited outcome-accumulating,snapshot or post-landmark,prohibited,False
+funding_rounds,prohibited outcome-accumulating,snapshot or post-landmark,prohibited,False
+funding_total_usd,prohibited outcome-accumulating,snapshot or post-landmark,prohibited,False
+future_round_count_36,prohibited outcome-accumulating,snapshot or post-landmark,prohibited,False
+last_funding_at,prohibited outcome-accumulating,snapshot or post-landmark,prohibited,False
+last_milestone_at,prohibited outcome-accumulating,snapshot or post-landmark,prohibited,False
+snapshot_status,prohibited outcome-accumulating,snapshot or post-landmark,prohibited,False
+status,prohibited outcome-accumulating,snapshot or post-landmark,prohibited,False

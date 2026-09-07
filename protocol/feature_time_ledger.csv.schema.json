@@ -1,0 +1,34 @@
+{
+  "column_count": 5,
+  "columns": [
+    {
+      "dtype": "object",
+      "name": "feature",
+      "nullable": false
+    },
+    {
+      "dtype": "object",
+      "name": "availability_class",
+      "nullable": false
+    },
+    {
+      "dtype": "object",
+      "name": "source_time_rule",
+      "nullable": false
+    },
+    {
+      "dtype": "object",
+      "name": "feature_set",
+      "nullable": false
+    },
+    {
+      "dtype": "bool",
+      "name": "approved",
+      "nullable": false
+    }
+  ],
+  "file_sha256": "caf5904becb0dacfbe5d8d55b8fbf33b12129b5d6cfd5eda909427d957486c71",
+  "metadata": {},
+  "row_count": 42,
+  "schema_hash": "e7647c6f3f0729930bc7d45a5b82b5442d445a0dbd339b9a1483f63f43af5718"
+}
