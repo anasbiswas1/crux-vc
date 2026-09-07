@@ -19,13 +19,13 @@ class Winsorizer(BaseEstimator, TransformerMixin):
         self.upper = upper
 
     def fit(self, X, y=None):
-        array = np.asarray(X, dtype=float)
+        array = pd.DataFrame(X).astype("float64").to_numpy(dtype=float)
         self.lower_bounds_ = np.nanquantile(array, self.lower, axis=0)
         self.upper_bounds_ = np.nanquantile(array, self.upper, axis=0)
         return self
 
     def transform(self, X):
-        array = np.asarray(X, dtype=float)
+        array = pd.DataFrame(X).astype("float64").to_numpy(dtype=float)
         return np.clip(array, self.lower_bounds_, self.upper_bounds_)
 
 
