@@ -1,0 +1,25 @@
+{
+  "author_email": "up2082724@myport.ac.uk",
+  "compute_profile": {
+    "approximation_seeds": 3,
+    "background_n": 100,
+    "background_sets": 3,
+    "bootstrap_refits": 100,
+    "esrc_faithfulness_random_repetitions": 20,
+    "esrc_permutation_orderings": 20,
+    "esrc_reference_panel_refits": 5,
+    "iid_policy_repetitions": 1000,
+    "is_final": true,
+    "local_audit_n": 300,
+    "max_configs_per_family": 24,
+    "name": "full",
+    "permutation_orderings": 20,
+    "power_simulations": 2000,
+    "selection_seeds": 3
+  },
+  "platform": "Linux-6.6.122+-x86_64-with-glibc2.35",
+  "project_config_sha256": "06e0b4f02ab0efaa12273222b528170e59300d4304b42225a57e717b2ab8664f",
+  "python": "3.13.15 (main, Aug  6 2026, 11:06:23) [GCC 11.4.0]",
+  "repository_root": "/content/drive/MyDrive/CRUX_Research/crux-vc",
+  "requirements_sha256": "888a30c9871796127fe4498a524fe942ba7a06a5486d4bd0846658041cd7d54e"
+}
