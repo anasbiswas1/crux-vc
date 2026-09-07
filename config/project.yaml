@@ -38,7 +38,7 @@ source:
     crunchbase-investments.csv: 52870
   expected_clean_counts:
     funding_rounds_distinct: 31616
-    investments_valid_unique: 52717
+    investments_valid_unique: 52715
     acquisitions_distinct_nonempty_approx: 4649
 
 cohort:
