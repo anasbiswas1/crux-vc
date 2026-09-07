@@ -1,0 +1,14 @@
+{
+  "source_name": "Datahoarder Crunchbase October 2013 mirror",
+  "source_repository": "https://github.com/datahoarder/crunchbase-october-2013",
+  "branch": "master",
+  "checked_out_commit": null,
+  "legacy_unverified_commit": "9303ebdc38fd6dbaa597e12a81edeec0246a61e2",
+  "expected_sha256": {
+    "crunchbase-companies.csv": "83217e8165db15124aec2799f5f28bda910ab09cc1ed9553b066eb97f60f195d",
+    "crunchbase-rounds.csv": "1b27a2b561678fe6257556d729819edc98a9581b18d6d8fad82413658e055212",
+    "crunchbase-investments.csv": "8f13f28d35915633c0a814dd22d49540ee115717d10d387ebc3a49183a35b65f",
+    "crunchbase-acquisitions.csv": "c3fb008fa75c48cafea7bdbd4eca050c11a55383d558998d349433f201b9f779"
+  },
+  "note": "Notebook 00 must resolve and record the actual checked-out commit. The legacy commit is not treated as verified."
+}

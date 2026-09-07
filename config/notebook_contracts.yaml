@@ -1,0 +1,424 @@
+'00':
+  permitted_blocks:
+  - source_metadata
+  inputs:
+  - config/project.yaml
+  - requirements.txt
+  - protocol/source_manifest.expected.json
+  outputs:
+  - protocol/source_manifest.json
+  - protocol/seed_registry.csv
+  - protocol/runtime_manifest.json
+  - data/raw/crunchbase_october_2013/*.csv
+  assertions:
+  - source_commit_resolved
+  - source_sha256_matches
+  - seed_registry_frozen
+'01':
+  permitted_blocks:
+  - source_data
+  inputs:
+  - protocol/source_manifest.json
+  - data/raw/crunchbase_october_2013/*.csv
+  outputs:
+  - results/audits/01_source_schema_audit.json
+  - results/audits/01_date_quality_audit.csv
+  - results/audits/01_missingness.csv
+  - results/audits/Crunchbase_2013_source_LICENSE.txt
+  assertions:
+  - required_schema_present
+  - expected_raw_rows_when_hash_matched
+  - licence_archived
+'02':
+  permitted_blocks:
+  - source_data
+  inputs:
+  - data/raw/crunchbase_october_2013/*.csv
+  outputs:
+  - data/interim/companies.parquet
+  - data/interim/funding_events.parquet
+  - data/interim/investment_edges.parquet
+  - data/interim/acquisitions.parquet
+  - results/audits/02_event_build_audit.json
+  assertions:
+  - deterministic_deduplication
+  - administrative_cutoff_enforced
+  - no_row_order_first
+'03':
+  permitted_blocks:
+  - all_landmark_dates_for_label_construction
+  inputs:
+  - data/interim/funding_events.parquet
+  - data/interim/acquisitions.parquet
+  outputs:
+  - data/processed/cohort_labels.parquet
+  - results/audits/03_cohort_flow.csv
+  - results/audits/03_label_overlap.csv
+  - results/audits/03_multistate_counts.csv
+  - results/audits/03_cohort_audit.json
+  assertions:
+  - unique_company_unit
+  - exact_landmark_lineage
+  - nested_outcome_invariants
+'04':
+  permitted_blocks:
+  - all_landmark_dates_for_feature_construction
+  inputs:
+  - data/processed/cohort_labels.parquet
+  - data/interim/companies.parquet
+  - data/interim/funding_events.parquet
+  - data/interim/investment_edges.parquet
+  outputs:
+  - data/processed/features_strict.parquet
+  - data/processed/features_extended.parquet
+  - protocol/feature_time_ledger.csv
+  - results/audits/04_feature_audit.json
+  assertions:
+  - no_prohibited_features
+  - every_feature_registered
+  - graph_edges_strictly_pre_landmark
+'05':
+  permitted_blocks:
+  - all_labels_for_structural_count_audit
+  inputs:
+  - data/processed/cohort_labels.parquet
+  - data/processed/features_strict.parquet
+  - protocol/feature_time_ledger.csv
+  outputs:
+  - protocol/split_ids.parquet
+  - protocol/development_folds.parquet
+  - results/audits/05_block_outcome_counts.csv
+  - results/audits/05_structural_endpoint_gates.csv
+  - protocol/explanation_background_ids.csv
+  - protocol/local_audit_case_ids.csv
+  - protocol/locks/phase0_lock.json
+  assertions:
+  - split_ids_disjoint
+  - expected_counts_when_hash_matched
+  - confirmatory_structural_gates_pass
+  - phase0_lock_created
+'06':
+  permitted_blocks:
+  - development
+  inputs:
+  - data/processed/features_strict.parquet
+  - data/processed/cohort_labels.parquet
+  - protocol/development_folds.parquet
+  - protocol/seed_registry.csv
+  - config/model_grids.yaml
+  outputs:
+  - results/predictions/development_oof_predictions.parquet
+  - results/models/development_model_registry.parquet
+  - results/models/near_optimal_registry.parquet
+  - results/audits/06_blocked_model_metrics.csv
+  - results/audits/06_model_skill_gates.csv
+  assertions:
+  - blocked_expanding_validation
+  - fold_local_preprocessing
+  - no_2008_2010_selection
+  - one_se_membership
+'07':
+  permitted_blocks:
+  - development
+  - probability_calibration
+  inputs:
+  - data/processed/features_strict.parquet
+  - data/processed/cohort_labels.parquet
+  - protocol/split_ids.parquet
+  - results/models/near_optimal_registry.parquet
+  outputs:
+  - results/models/calibration_registry.parquet
+  - results/predictions/probability_calibration_2008.parquet
+  - results/models/calibrated/*.joblib
+  assertions:
+  - platt_headline_for_all_labels
+  - cross_fitted_calibration_comparison
+  - no_model_selection_on_2008
+08:
+  permitted_blocks:
+  - development
+  - probability_calibration
+  inputs:
+  - results/models/near_optimal_registry.parquet
+  - results/models/calibration_registry.parquet
+  - protocol/seed_registry.csv
+  outputs:
+  - results/models/matched_reference_configs.parquet
+  - protocol/final_task_registry.parquet
+  - protocol/final_task_chunk_plan.csv
+  - results/audits/08_final_registry_audit.json
+  assertions:
+  - matched_f36_configuration_across_labels
+  - bootstrap_seed_registry_frozen
+  - task_chunks_deterministic
+09:
+  permitted_blocks:
+  - development
+  - probability_calibration
+  inputs:
+  - data/processed/features_strict.parquet
+  - data/processed/cohort_labels.parquet
+  - protocol/split_ids.parquet
+  - results/models/calibration_registry.parquet
+  - protocol/explanation_background_ids.csv
+  - protocol/seed_registry.csv
+  outputs:
+  - results/attributions/development_pilot_attributions.parquet
+  - results/attributions/development_pilot_conditional_imputation.parquet
+  - results/audits/09_approximation_repeat_diagnostics.csv
+  - results/audits/09_explanation_runtime.csv
+  - results/audits/09_conditional_sampler_diagnostics.json
+  - results/audits/09_explanation_loss_meta_oof.csv
+  - results/selective/development_gate_scores_2008.parquet
+  - results/selective/development_explanation_losses_2008.parquet
+  - results/controls/development_faithfulness_curves_2008.parquet
+  - results/controls/development_faithfulness_summary_2008.parquet
+  - protocol/development_faithfulness_scale.json
+  assertions:
+  - development_only_pilot
+  - common_semantic_groups
+  - approximation_error_measured
+  - conditional_sampler_diagnosed
+  - operational_loss_targets_development_only
+  - meta_score_cross_fitted
+  - faithfulness_scale_frozen_before_2009
+'10':
+  permitted_blocks:
+  - development
+  - probability_calibration
+  inputs:
+  - results/attributions/development_pilot_attributions.parquet
+  - results/audits/09_approximation_repeat_diagnostics.csv
+  - results/audits/09_explanation_runtime.csv
+  - results/selective/development_gate_scores_2008.parquet
+  - results/selective/development_explanation_losses_2008.parquet
+  - protocol/development_faithfulness_scale.json
+  - protocol/locks/phase0_lock.json
+  outputs:
+  - results/audits/10_rq1_power_operating_characteristics.csv
+  - results/selective/frozen_candidate_policies.parquet
+  - protocol/frozen_explanation_losses.json
+  - protocol/locks/design_lock.json
+  - protocol/design_snapshot.json
+  assertions:
+  - power_grid_completed
+  - losses_frozen
+  - candidate_family_finite
+  - esrc_reference_panel_and_faithfulness_scale_frozen
+  - final_grade_requires_full_profile_and_hmac
+'11':
+  permitted_blocks:
+  - development
+  - probability_calibration
+  - final_test
+  inputs:
+  - protocol/locks/phase0_lock.json
+  - protocol/locks/design_lock.json
+  - protocol/final_task_registry.parquet
+  - data/processed/features_strict.parquet
+  - data/processed/cohort_labels.parquet
+  - protocol/split_ids.parquet
+  - protocol/local_audit_case_ids.csv
+  - protocol/explanation_background_ids.csv
+  outputs:
+  - results/stage11_chunks/*.parquet
+  - results/predictions/final_predictions.parquet
+  - results/attributions/final_attributions_long.parquet
+  assertions:
+  - both_hmac_locks_verified
+  - final_test_access_hash_logged
+  - chunk_manifests_complete_before_merge
+  - immutable_long_form_outputs
+'12':
+  permitted_blocks:
+  - final_test_derived_outputs
+  inputs:
+  - results/attributions/final_attributions_long.parquet
+  outputs:
+  - results/inference/rq1_specification_effects.csv
+  - results/inference/rq1_cross_spec_distances.parquet
+  - results/inference/rq1_within_refit_distances.parquet
+  - results/inference/rq1_bootstrap_draws.parquet
+  assertions:
+  - paired_same_cases_and_refits
+  - within_label_noise_subtracted
+  - hierarchical_bootstrap
+  - three_way_interpretation
+'13':
+  permitted_blocks:
+  - final_test_derived_outputs
+  inputs:
+  - results/attributions/final_attributions_long.parquet
+  - results/predictions/final_predictions.parquet
+  outputs:
+  - results/inference/rq2_model_pair_distances.parquet
+  - results/inference/rq2_family_effects.csv
+  - results/inference/rq2_bootstrap_draws.parquet
+  - results/inference/crossed_attribution_decomposition.csv
+  - results/inference/construct_robust_driver_taxonomy_precontrols.csv
+  assertions:
+  - label_specific_near_optimal_models_only_for_rq2
+  - equal_pair_semantics
+  - prediction_equivalence_flagged
+  - taxonomy_withheld_pending_controls
+  - audit_stratified_case_and_pair_bootstrap
+'14':
+  permitted_blocks:
+  - development_controls
+  - final_test_derived_outputs
+  inputs:
+  - results/attributions/final_attributions_long.parquet
+  - results/models/calibration_registry.parquet
+  - data/processed/features_strict.parquet
+  - data/processed/cohort_labels.parquet
+  - protocol/split_ids.parquet
+  outputs:
+  - results/controls/rq3_conditional_deletion_curves.parquet
+  - results/controls/rq3_faithfulness_case_summary.parquet
+  - results/controls/rq3_randomization_controls.csv
+  - results/controls/rq3_semisynthetic_recovery.csv
+  - results/controls/rq3_injected_leakage_control.csv
+  - results/controls/rq3_control_summary.csv
+  - results/inference/construct_robust_driver_taxonomy.csv
+  assertions:
+  - top_vs_random_and_bottom
+  - parameter_randomization
+  - label_randomization
+  - semisynthetic_recovery
+  - isolated_leakage_control
+  - taxonomy_gated_by_controls
+'15':
+  permitted_blocks:
+  - final_test_derived_outputs
+  inputs:
+  - results/predictions/final_predictions.parquet
+  - results/inference/rq1_cross_spec_distances.parquet
+  - data/processed/features_extended.parquet
+  outputs:
+  - results/decision/topk_portfolio_overlap.csv
+  - results/decision/screening_performance.csv
+  - results/decision/expected_utility_grid.csv
+  - results/decision/selection_composition.csv
+  - results/decision/anonymized_construct_fragile_cases.csv
+  assertions:
+  - same_test_startups
+  - fixed_review_budgets
+  - small_cells_collapsed
+  - secret_salted_case_ids
+'16':
+  permitted_blocks:
+  - risk_calibration
+  - final_test_derived_outputs
+  inputs:
+  - results/predictions/final_predictions.parquet
+  - results/inference/rq1_cross_spec_distances.parquet
+  - results/inference/rq1_within_refit_distances.parquet
+  - results/controls/rq3_faithfulness_case_summary.parquet
+  - results/models/calibration_registry.parquet
+  outputs:
+  - results/selective/risk_calibration_gate_scores_2009.parquet
+  - results/selective/test_gate_scores_common_population.parquet
+  - results/selective/test_losses_common_population.parquet
+  - results/selective/deployable_gate_curves.csv
+  - results/selective/retrospective_matched_coverage_curves.csv
+  - results/selective/gate_partial_aurc_summary.csv
+  - results/selective/conformal_set_outputs_2010.parquet
+  assertions:
+  - frozen_deployment_predictor
+  - cross_fitted_2009_conformal_scores
+  - deployed_thresholds_from_2009
+  - retrospective_ranking_clearly_labelled
+  - same_family_bootstrap_epistemic_variance
+  - cross_family_selective_ensemble_disagreement
+'17':
+  permitted_blocks:
+  - risk_calibration
+  - final_test_derived_outputs
+  - iid_simulation
+  inputs:
+  - protocol/locks/design_lock.json
+  - protocol/design_snapshot.json
+  - results/selective/frozen_candidate_policies.parquet
+  - results/selective/risk_calibration_gate_scores_2009.parquet
+  - results/selective/test_gate_scores_common_population.parquet
+  - results/selective/test_losses_common_population.parquet
+  - results/models/calibration_registry.parquet
+  - protocol/final_task_registry.parquet
+  - protocol/explanation_background_ids.csv
+  - protocol/seed_registry.csv
+  - data/processed/features_strict.parquet
+  - data/processed/cohort_labels.parquet
+  - protocol/split_ids.parquet
+  outputs:
+  - results/selective/risk_calibration_explanation_losses_2009.parquet
+  - results/attributions/esrc_risk_calibration_attributions_2009.parquet
+  - results/controls/esrc_risk_calibration_faithfulness_2009.parquet
+  - results/audits/17_esrc_operational_panel_audit.json
+  - results/selective/esrc_policy_calibration_2009.csv
+  - results/selective/esrc_temporal_transport_2010.csv
+  - results/selective/esrc_iid_simulation_repetitions.parquet
+  - results/selective/esrc_summary.json
+  assertions:
+  - full_2009_losses_use_frozen_precalibration_objects
+  - missing_failed_explanations_receive_loss_one
+  - accepted_set_losses_not_zero_coded
+  - coverage_tested_separately
+  - finite_family_multiplicity
+  - guarantee_requires_panel_quality_and_independent_theorem_check
+  - chronological_track_has_no_distribution_free_claim
+'18':
+  permitted_blocks:
+  - development
+  - probability_calibration
+  - final_test_derived_outputs
+  inputs:
+  - data/processed/features_strict.parquet
+  - data/processed/features_extended.parquet
+  - data/processed/cohort_labels.parquet
+  - protocol/split_ids.parquet
+  - results/models/matched_reference_configs.parquet
+  - results/predictions/final_predictions.parquet
+  outputs:
+  - results/inference/strict_extended_feature_robustness.csv
+  - results/predictions/strict_extended_test_predictions.parquet
+  - results/inference/event_count_matched_scarcity_envelope.csv
+  - results/inference/landmark_strata_performance.csv
+  - results/inference/strict_extended_explanation_sensitivity.csv
+  assertions:
+  - strict_feature_headline
+  - extended_metadata_sensitivity
+  - positive_event_count_matching_development_only
+  - landmark_strata_reported
+'19':
+  permitted_blocks:
+  - optional_external_data
+  inputs:
+  - data/external/**
+  outputs:
+  - results/audits/19_phbench_status.json
+  - results/inference/phbench_clean_to_leaky_curve.csv
+  - results/audits/19_kaggle_snapshot_status.json
+  - results/inference/kaggle_snapshot_leakage_negative_control.csv
+  assertions:
+  - fail_gracefully_without_access
+  - no_access_control_bypass
+  - external_role_not_mislabelled_as_replication
+'20':
+  permitted_blocks:
+  - derived_outputs_only
+  inputs:
+  - results/inference/*.csv
+  - results/controls/*.csv
+  - results/decision/*.csv
+  - results/selective/*.csv
+  outputs:
+  - figures/*.png
+  - results/release/tables/*
+  - results/release/release_table_inventory.csv
+  - results/release/CRUX_VC_reproducibility_release.zip
+  - results/release/release_manifest.json
+  assertions:
+  - no_raw_data_in_release
+  - no_named_startups
+  - identifier_scan_passes
+  - table_figure_sources_frozen

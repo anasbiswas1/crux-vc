@@ -1,0 +1,42 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "crux-vc"
+version = "0.2.2"
+description = "Construct–Rashomon uncertainty audit for venture-capital screening"
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [{name = "Md Anas Biswas", email = "up2082724@myport.ac.uk"}]
+dependencies = [
+  "numpy>=1.26,<3",
+  "pandas>=2.1,<3",
+  "pyarrow>=15,<22",
+  "scipy>=1.11,<2",
+  "scikit-learn>=1.4,<1.8",
+  "statsmodels>=0.14,<1",
+  "joblib>=1.3,<2",
+  "PyYAML>=6,<7",
+  "networkx>=3.2,<4",
+  "tqdm>=4.66,<5",
+  "matplotlib>=3.8,<4",
+]
+
+[project.optional-dependencies]
+models = ["xgboost>=2.0,<4", "lightgbm>=4.1,<5", "interpret>=0.6,<1"]
+xai = ["shap>=0.45,<1"]
+dev = ["pytest>=8,<9", "nbformat>=5.9,<6", "nbclient>=0.10,<1", "jupyter>=1.0,<2"]
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+addopts = "-q"
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100

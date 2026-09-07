@@ -1,0 +1,96 @@
+# Semantic groups are frozen before model/explanation results are viewed.
+groups:
+  firm_age_and_date_quality:
+    - founding_age_days
+    - founding_date_missing
+    - founding_date_invalid
+  initial_financing_amount:
+    - landmark_amount_usd
+    - log1p_landmark_amount_usd
+    - landmark_amount_missing
+    - landmark_amount_conflict
+  initial_round_type:
+    - landmark_round_type
+  first_round_syndicate:
+    - landmark_investor_count
+    - landmark_investor_edge_missing
+    - landmark_investor_country_count
+  investor_experience:
+    - investor_prior_event_count_mean
+    - investor_prior_event_count_max
+    - investor_prior_company_count_mean
+    - investor_prior_company_count_max
+  investor_network_position:
+    - investor_prior_degree_mean
+    - investor_prior_degree_max
+    - investor_prior_weighted_degree_mean
+    - investor_prior_weighted_degree_max
+  industry_category:
+    - category_code
+  geography:
+    - country_code
+    - region
+  lagged_category_market_activity:
+    - category_deal_count_365d
+    - category_median_amount_365d
+  lagged_regional_market_activity:
+    - region_deal_count_365d
+    - region_median_amount_365d
+  calendar_regime:
+    - landmark_year
+    - landmark_quarter
+    - market_deal_count_90d
+    - market_deal_count_365d
+    - market_median_amount_365d
+  missingness_data_quality:
+    - company_metadata_missing_count
+    - event_source_conflict_count
+    - landmark_investor_metadata_missing_rate
+
+strict_feature_columns:
+  - landmark_amount_usd
+  - log1p_landmark_amount_usd
+  - landmark_amount_missing
+  - landmark_amount_conflict
+  - landmark_round_type
+  - landmark_investor_count
+  - landmark_investor_edge_missing
+  - investor_prior_event_count_mean
+  - investor_prior_event_count_max
+  - investor_prior_company_count_mean
+  - investor_prior_company_count_max
+  - investor_prior_degree_mean
+  - investor_prior_degree_max
+  - investor_prior_weighted_degree_mean
+  - investor_prior_weighted_degree_max
+  - landmark_year
+  - landmark_quarter
+  - market_deal_count_90d
+  - market_deal_count_365d
+  - market_median_amount_365d
+  - event_source_conflict_count
+
+extended_additional_columns:
+  - founding_age_days
+  - founding_date_missing
+  - founding_date_invalid
+  - category_code
+  - country_code
+  - region
+  - landmark_investor_country_count
+  - landmark_investor_metadata_missing_rate
+  - category_deal_count_365d
+  - category_median_amount_365d
+  - region_deal_count_365d
+  - region_median_amount_365d
+  - company_metadata_missing_count
+
+prohibited_columns:
+  - funding_total_usd
+  - funding_rounds
+  - last_funding_at
+  - last_milestone_at
+  - status
+  - snapshot_status
+  - acquisition_price
+  - future_round_count_36

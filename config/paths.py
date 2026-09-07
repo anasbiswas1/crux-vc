@@ -1,11 +1,10 @@
+"""Colab/Drive defaults. Runtime discovery in :mod:`cruxvc.paths` overrides safely."""
 from pathlib import Path
+import os
 
-DRIVE_ROOT = Path("/content/drive/MyDrive/CRUX_Research")
-REPO       = DRIVE_ROOT / "crux-vc"
-DATA       = REPO / "data"
-RAW        = DATA / "raw"
-MIRROR     = RAW / "crunchbase-october-2013"
-PROTOCOL   = REPO / "protocol"
-RESULTS    = REPO / "results"
-FIGURES    = REPO / "figures"
-DOCS       = REPO / "docs"
+REPO_URL = "https://github.com/anasbiswas1/crux-vc"
+AUTHOR_EMAIL = "up2082724@myport.ac.uk"
+DRIVE_PROJECT_ROOT = Path("/content/drive/MyDrive/CRUX_Research")
+DEFAULT_REPO_ROOT = Path(
+    os.environ.get("CRUX_REPO_ROOT", str(DRIVE_PROJECT_ROOT / "crux-vc"))
+)

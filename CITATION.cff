@@ -1,0 +1,11 @@
+cff-version: 1.2.0
+message: "Please cite the eventual CRUX-VC paper and this software release."
+title: "CRUX-VC: Construct–Rashomon Uncertainty Examination for Venture Capital"
+type: software
+version: 0.2.2
+authors:
+  - family-names: Biswas
+    given-names: Md Anas
+    email: up2082724@myport.ac.uk
+repository-code: "https://github.com/anasbiswas1/crux-vc"
+license: "MIT"

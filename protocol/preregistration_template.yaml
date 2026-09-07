@@ -1,0 +1,20 @@
+protocol_version: "2.2"
+status: draft
+principal_investigator_email: up2082724@myport.ac.uk
+primary_outcomes: [F18, F36, B+36]
+confirmatory_contrasts:
+  - [F18, F36]
+  - [F36, B+36]
+primary_estimand: delta_spec
+primary_distance: sqrt_jsd_base2
+smallest_meaningful_effect: 0.10
+equivalence_region: [-0.10, 0.10]
+primary_predictive_metric: average_precision
+primary_feature_set: strict
+primary_attribution_target: platt_calibrated_log_odds
+primary_attribution_method: grouped_permutation_shap
+primary_gate_summary: normalized_partial_aurc_0.50_0.80
+multiplicity:
+  rq1: holm
+  gates: holm
+notes: "Freeze through Notebook 05 and supersede only through a signed Notebook 10 design lock."

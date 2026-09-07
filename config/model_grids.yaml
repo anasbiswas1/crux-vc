@@ -1,0 +1,117 @@
+# Ordered grids. The active profile deterministically takes a balanced prefix up to
+# max_configs_per_family. Final headline execution requires the full profile.
+logistic_elastic_net:
+  family: logistic_elastic_net
+  complexity_rank: 1
+  parameters:
+    - {C: 0.03, l1_ratio: 0.0}
+    - {C: 0.10, l1_ratio: 0.0}
+    - {C: 0.30, l1_ratio: 0.0}
+    - {C: 1.00, l1_ratio: 0.0}
+    - {C: 3.00, l1_ratio: 0.0}
+    - {C: 10.0, l1_ratio: 0.0}
+    - {C: 0.03, l1_ratio: 0.25}
+    - {C: 0.10, l1_ratio: 0.25}
+    - {C: 0.30, l1_ratio: 0.25}
+    - {C: 1.00, l1_ratio: 0.25}
+    - {C: 3.00, l1_ratio: 0.25}
+    - {C: 10.0, l1_ratio: 0.25}
+    - {C: 0.03, l1_ratio: 0.50}
+    - {C: 0.10, l1_ratio: 0.50}
+    - {C: 0.30, l1_ratio: 0.50}
+    - {C: 1.00, l1_ratio: 0.50}
+    - {C: 3.00, l1_ratio: 0.50}
+    - {C: 10.0, l1_ratio: 0.50}
+    - {C: 0.03, l1_ratio: 0.75}
+    - {C: 0.10, l1_ratio: 0.75}
+    - {C: 0.30, l1_ratio: 0.75}
+    - {C: 1.00, l1_ratio: 0.75}
+    - {C: 3.00, l1_ratio: 0.75}
+    - {C: 10.0, l1_ratio: 0.75}
+
+explainable_boosting:
+  family: explainable_boosting
+  complexity_rank: 2
+  parameters:
+    - {max_bins: 64, max_rounds: 1000, learning_rate: 0.02, interactions: 0, min_samples_leaf: 5}
+    - {max_bins: 128, max_rounds: 1000, learning_rate: 0.02, interactions: 0, min_samples_leaf: 5}
+    - {max_bins: 256, max_rounds: 1000, learning_rate: 0.02, interactions: 0, min_samples_leaf: 5}
+    - {max_bins: 64, max_rounds: 1500, learning_rate: 0.01, interactions: 0, min_samples_leaf: 10}
+    - {max_bins: 128, max_rounds: 1500, learning_rate: 0.01, interactions: 0, min_samples_leaf: 10}
+    - {max_bins: 256, max_rounds: 1500, learning_rate: 0.01, interactions: 0, min_samples_leaf: 10}
+    - {max_bins: 64, max_rounds: 1000, learning_rate: 0.03, interactions: 5, min_samples_leaf: 5}
+    - {max_bins: 128, max_rounds: 1000, learning_rate: 0.03, interactions: 5, min_samples_leaf: 5}
+    - {max_bins: 256, max_rounds: 1000, learning_rate: 0.03, interactions: 5, min_samples_leaf: 5}
+    - {max_bins: 64, max_rounds: 1500, learning_rate: 0.02, interactions: 5, min_samples_leaf: 10}
+    - {max_bins: 128, max_rounds: 1500, learning_rate: 0.02, interactions: 5, min_samples_leaf: 10}
+    - {max_bins: 256, max_rounds: 1500, learning_rate: 0.02, interactions: 5, min_samples_leaf: 10}
+    - {max_bins: 64, max_rounds: 1000, learning_rate: 0.02, interactions: 10, min_samples_leaf: 5}
+    - {max_bins: 128, max_rounds: 1000, learning_rate: 0.02, interactions: 10, min_samples_leaf: 5}
+    - {max_bins: 256, max_rounds: 1000, learning_rate: 0.02, interactions: 10, min_samples_leaf: 5}
+    - {max_bins: 64, max_rounds: 1500, learning_rate: 0.01, interactions: 10, min_samples_leaf: 10}
+    - {max_bins: 128, max_rounds: 1500, learning_rate: 0.01, interactions: 10, min_samples_leaf: 10}
+    - {max_bins: 256, max_rounds: 1500, learning_rate: 0.01, interactions: 10, min_samples_leaf: 10}
+    - {max_bins: 64, max_rounds: 2000, learning_rate: 0.01, interactions: 5, min_samples_leaf: 20}
+    - {max_bins: 128, max_rounds: 2000, learning_rate: 0.01, interactions: 5, min_samples_leaf: 20}
+    - {max_bins: 256, max_rounds: 2000, learning_rate: 0.01, interactions: 5, min_samples_leaf: 20}
+    - {max_bins: 64, max_rounds: 2000, learning_rate: 0.01, interactions: 10, min_samples_leaf: 20}
+    - {max_bins: 128, max_rounds: 2000, learning_rate: 0.01, interactions: 10, min_samples_leaf: 20}
+    - {max_bins: 256, max_rounds: 2000, learning_rate: 0.01, interactions: 10, min_samples_leaf: 20}
+
+random_forest:
+  family: random_forest
+  complexity_rank: 3
+  parameters:
+    - {n_estimators: 400, max_depth: 4, min_samples_leaf: 5, max_features: sqrt}
+    - {n_estimators: 400, max_depth: 6, min_samples_leaf: 5, max_features: sqrt}
+    - {n_estimators: 400, max_depth: 10, min_samples_leaf: 5, max_features: sqrt}
+    - {n_estimators: 400, max_depth: null, min_samples_leaf: 5, max_features: sqrt}
+    - {n_estimators: 700, max_depth: 4, min_samples_leaf: 10, max_features: sqrt}
+    - {n_estimators: 700, max_depth: 6, min_samples_leaf: 10, max_features: sqrt}
+    - {n_estimators: 700, max_depth: 10, min_samples_leaf: 10, max_features: sqrt}
+    - {n_estimators: 700, max_depth: null, min_samples_leaf: 10, max_features: sqrt}
+    - {n_estimators: 400, max_depth: 4, min_samples_leaf: 20, max_features: 0.5}
+    - {n_estimators: 400, max_depth: 6, min_samples_leaf: 20, max_features: 0.5}
+    - {n_estimators: 400, max_depth: 10, min_samples_leaf: 20, max_features: 0.5}
+    - {n_estimators: 400, max_depth: null, min_samples_leaf: 20, max_features: 0.5}
+    - {n_estimators: 700, max_depth: 4, min_samples_leaf: 5, max_features: 0.5}
+    - {n_estimators: 700, max_depth: 6, min_samples_leaf: 5, max_features: 0.5}
+    - {n_estimators: 700, max_depth: 10, min_samples_leaf: 5, max_features: 0.5}
+    - {n_estimators: 700, max_depth: null, min_samples_leaf: 5, max_features: 0.5}
+    - {n_estimators: 1000, max_depth: 4, min_samples_leaf: 10, max_features: 0.75}
+    - {n_estimators: 1000, max_depth: 6, min_samples_leaf: 10, max_features: 0.75}
+    - {n_estimators: 1000, max_depth: 10, min_samples_leaf: 10, max_features: 0.75}
+    - {n_estimators: 1000, max_depth: null, min_samples_leaf: 10, max_features: 0.75}
+    - {n_estimators: 1000, max_depth: 4, min_samples_leaf: 20, max_features: 0.75}
+    - {n_estimators: 1000, max_depth: 6, min_samples_leaf: 20, max_features: 0.75}
+    - {n_estimators: 1000, max_depth: 10, min_samples_leaf: 20, max_features: 0.75}
+    - {n_estimators: 1000, max_depth: null, min_samples_leaf: 20, max_features: 0.75}
+
+xgboost:
+  family: xgboost
+  complexity_rank: 4
+  parameters:
+    - {n_estimators: 300, max_depth: 2, learning_rate: 0.03, min_child_weight: 1, subsample: 0.8, colsample_bytree: 0.8}
+    - {n_estimators: 500, max_depth: 2, learning_rate: 0.03, min_child_weight: 1, subsample: 0.8, colsample_bytree: 0.8}
+    - {n_estimators: 700, max_depth: 2, learning_rate: 0.02, min_child_weight: 1, subsample: 0.8, colsample_bytree: 0.8}
+    - {n_estimators: 300, max_depth: 3, learning_rate: 0.03, min_child_weight: 1, subsample: 0.8, colsample_bytree: 0.8}
+    - {n_estimators: 500, max_depth: 3, learning_rate: 0.03, min_child_weight: 1, subsample: 0.8, colsample_bytree: 0.8}
+    - {n_estimators: 700, max_depth: 3, learning_rate: 0.02, min_child_weight: 1, subsample: 0.8, colsample_bytree: 0.8}
+    - {n_estimators: 300, max_depth: 4, learning_rate: 0.03, min_child_weight: 1, subsample: 0.8, colsample_bytree: 0.8}
+    - {n_estimators: 500, max_depth: 4, learning_rate: 0.03, min_child_weight: 1, subsample: 0.8, colsample_bytree: 0.8}
+    - {n_estimators: 700, max_depth: 4, learning_rate: 0.02, min_child_weight: 1, subsample: 0.8, colsample_bytree: 0.8}
+    - {n_estimators: 300, max_depth: 2, learning_rate: 0.05, min_child_weight: 5, subsample: 0.9, colsample_bytree: 0.9}
+    - {n_estimators: 500, max_depth: 2, learning_rate: 0.05, min_child_weight: 5, subsample: 0.9, colsample_bytree: 0.9}
+    - {n_estimators: 700, max_depth: 2, learning_rate: 0.03, min_child_weight: 5, subsample: 0.9, colsample_bytree: 0.9}
+    - {n_estimators: 300, max_depth: 3, learning_rate: 0.05, min_child_weight: 5, subsample: 0.9, colsample_bytree: 0.9}
+    - {n_estimators: 500, max_depth: 3, learning_rate: 0.05, min_child_weight: 5, subsample: 0.9, colsample_bytree: 0.9}
+    - {n_estimators: 700, max_depth: 3, learning_rate: 0.03, min_child_weight: 5, subsample: 0.9, colsample_bytree: 0.9}
+    - {n_estimators: 300, max_depth: 4, learning_rate: 0.05, min_child_weight: 5, subsample: 0.9, colsample_bytree: 0.9}
+    - {n_estimators: 500, max_depth: 4, learning_rate: 0.05, min_child_weight: 5, subsample: 0.9, colsample_bytree: 0.9}
+    - {n_estimators: 700, max_depth: 4, learning_rate: 0.03, min_child_weight: 5, subsample: 0.9, colsample_bytree: 0.9}
+    - {n_estimators: 400, max_depth: 2, learning_rate: 0.03, min_child_weight: 10, subsample: 1.0, colsample_bytree: 0.8}
+    - {n_estimators: 600, max_depth: 2, learning_rate: 0.03, min_child_weight: 10, subsample: 1.0, colsample_bytree: 0.8}
+    - {n_estimators: 400, max_depth: 3, learning_rate: 0.03, min_child_weight: 10, subsample: 1.0, colsample_bytree: 0.8}
+    - {n_estimators: 600, max_depth: 3, learning_rate: 0.03, min_child_weight: 10, subsample: 1.0, colsample_bytree: 0.8}
+    - {n_estimators: 400, max_depth: 4, learning_rate: 0.03, min_child_weight: 10, subsample: 1.0, colsample_bytree: 0.8}
+    - {n_estimators: 600, max_depth: 4, learning_rate: 0.03, min_child_weight: 10, subsample: 1.0, colsample_bytree: 0.8}

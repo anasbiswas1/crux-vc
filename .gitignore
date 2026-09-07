@@ -1,20 +1,39 @@
-# datasets, model binaries, third-party repos
-data/
-external/
-
-# secrets — never commit
-.secrets/
-*.env
-.git-credentials
-kaggle.json
-
-# python
+# Python
 __pycache__/
 *.py[cod]
-.ipynb_checkpoints/
-*.pkl
-*.joblib
-*.pt
+.pytest_cache/
+.mypy_cache/
+.venv/
+venv/
+*.egg-info/
 
-# os
+# Jupyter
+.ipynb_checkpoints/
+
+# Raw/intermediate data and generated results
+# Keep directory placeholders, never commit source data or identifying case exports.
+data/raw/*
+!data/raw/.gitkeep
+data/interim/*
+!data/interim/.gitkeep
+data/processed/*
+!data/processed/.gitkeep
+data/external/*
+!data/external/.gitkeep
+results/**
+!results/**/.gitkeep
+figures/*
+!figures/.gitkeep
+
+# Protocol secrets and mutable execution state
+.env
+*.key
+protocol/.signing_key
+protocol/test_access_log.jsonl
+protocol/locks/*.hmac
+
+# OS/editor
 .DS_Store
+Thumbs.db
+.vscode/
+.idea/

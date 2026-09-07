@@ -1,23 +1,57 @@
-# === crux-vc session bootstrap: run first on every fresh runtime ===
-import os, shutil, subprocess, importlib
-from google.colab import drive
+#!/usr/bin/env python
+"""Print the standard Colab bootstrap cell for a CRUX-VC notebook."""
+from __future__ import annotations
 
-DRIVE_ROOT = "/content/drive/MyDrive/CRUX_Research"
-REPO       = os.path.join(DRIVE_ROOT, "crux-vc")
+import argparse
 
-drive.mount("/content/drive", force_remount=False)
-for f in (".gitconfig", ".git-credentials"):
-    shutil.copy(os.path.join(DRIVE_ROOT, f), os.path.join("/root", f))
-os.chmod("/root/.git-credentials", 0o600)
 
-os.chdir(REPO)
-subprocess.run(["git", "pull", "origin", "main"], check=True)
+def bootstrap_source(stage_id: str, suffix_expression: str = "None") -> str:
+    return f'''# Standard CRUX-VC Colab bootstrap. Git dotfiles restore from the Drive project root; tokens never appear in cells.
+import os, subprocess, sys
+from pathlib import Path
 
-for mod in ("interpret", "shap", "xgboost", "lightgbm", "openpyxl"):
-    try:
-        importlib.import_module(mod)
-    except ImportError:
-        subprocess.run(["pip", "install", "-q", mod], check=True)
+try:
+    from google.colab import drive  # type: ignore
+    drive.mount("/content/drive", force_remount=False)
+except ImportError:
+    pass
 
-os.environ["PYTHONPATH"] = REPO + ":" + os.environ.get("PYTHONPATH", "")
-print(subprocess.run(["git", "log", "--oneline", "-1"], capture_output=True, text=True).stdout.strip())
+import shutil
+DRIVE_PROJECT_ROOT = Path("/content/drive/MyDrive/CRUX_Research")
+for _dotfile in (".gitconfig", ".git-credentials"):
+    if (DRIVE_PROJECT_ROOT / _dotfile).exists():
+        shutil.copy(DRIVE_PROJECT_ROOT / _dotfile, Path.home() / _dotfile)
+if (Path.home() / ".git-credentials").exists():
+    os.chmod(Path.home() / ".git-credentials", 0o600)
+
+REPO_URL = "https://github.com/anasbiswas1/crux-vc"
+REPO_ROOT = Path(os.environ.get("CRUX_REPO_ROOT", "/content/drive/MyDrive/CRUX_Research/crux-vc"))
+if not (REPO_ROOT / ".cruxvc-root").exists():
+    if REPO_ROOT.exists() and any(REPO_ROOT.iterdir()):
+        raise RuntimeError(f"{{REPO_ROOT}} exists but is not a CRUX-VC checkout")
+    REPO_ROOT.parent.mkdir(parents=True, exist_ok=True)
+    subprocess.run(["git", "clone", REPO_URL, str(REPO_ROOT)], check=True)
+os.chdir(REPO_ROOT)
+sys.path.insert(0, str(REPO_ROOT / "src"))
+
+try:
+    import yaml, pandas, sklearn, pyarrow  # noqa: F401
+except ImportError:
+    subprocess.run([sys.executable, "-m", "pip", "install", "-r", str(REPO_ROOT / "requirements.txt")], check=True)
+
+from cruxvc.runtime import bootstrap_notebook
+CTX = bootstrap_notebook("{stage_id}", suffix={suffix_expression})
+P, CFG, PROFILE = CTX.paths, CTX.config, CTX.profile
+'''
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("stage_id")
+    parser.add_argument("--suffix-expression", default="None")
+    args = parser.parse_args()
+    print(bootstrap_source(args.stage_id, args.suffix_expression))
+
+
+if __name__ == "__main__":
+    main()

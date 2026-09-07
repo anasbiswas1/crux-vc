@@ -1,0 +1,153 @@
+project:
+  name: CRUX-VC
+  version: "2.2"
+  author_email: up2082724@myport.ac.uk
+  repository_url: https://github.com/anasbiswas1/crux-vc
+  drive_root: /content/drive/MyDrive/CRUX_Research
+  default_repo_root: /content/drive/MyDrive/CRUX_Research/crux-vc
+  intended_venue: Decision Support Systems
+  secondary_venue: Expert Systems with Applications
+
+execution:
+  random_seed: 260826
+  timezone: UTC
+  compute_profile: full
+  final_profile_name: full
+  require_hmac_for_final_test: true
+  parquet_compression: zstd
+  overwrite_completed_stages: false
+  strict_expected_source_hashes: true
+  strict_expected_counts_when_hashes_match: true
+  anonymize_release_ids: true
+  test_access_logging: true
+
+source:
+  name: crunchbase-october-2013
+  repository_url: https://github.com/datahoarder/crunchbase-october-2013
+  branch: master
+  administrative_cutoff: "2013-10-01"
+  legacy_unverified_commit: 9303ebdc38fd6dbaa597e12a81edeec0246a61e2
+  expected_files:
+    crunchbase-companies.csv: 83217e8165db15124aec2799f5f28bda910ab09cc1ed9553b066eb97f60f195d
+    crunchbase-rounds.csv: 1b27a2b561678fe6257556d729819edc98a9581b18d6d8fad82413658e055212
+    crunchbase-investments.csv: 8f13f28d35915633c0a814dd22d49540ee115717d10d387ebc3a49183a35b65f
+    crunchbase-acquisitions.csv: c3fb008fa75c48cafea7bdbd4eca050c11a55383d558998d349433f201b9f779
+  expected_raw_rows:
+    crunchbase-companies.csv: 17727
+    crunchbase-rounds.csv: 31679
+    crunchbase-investments.csv: 52870
+  expected_clean_counts:
+    funding_rounds_distinct: 31616
+    investments_valid_unique: 52717
+    acquisitions_distinct_nonempty_approx: 4649
+
+cohort:
+  landmark_start: "2005-01-01"
+  landmark_end: "2010-10-01"
+  allowed_landmark_types: [angel, series-a]
+  expected_n: 4234
+  split_blocks:
+    development: ["2005-01-01", "2007-12-31"]
+    probability_calibration: ["2008-01-01", "2008-12-31"]
+    risk_calibration: ["2009-01-01", "2009-12-31"]
+    final_test: ["2010-01-01", "2010-10-01"]
+
+outcomes:
+  confirmatory: [F18, F36, B+36]
+  exploratory: [C+36]
+  secondary: [A36, Broad36]
+  qualifying_financing_types:
+    [angel, series-a, series-b, series-c-plus, venture, other, private-equity, crowdfunding]
+
+expected_block_counts:
+  development: {n: 1811, F18: 643, F36: 986, B+36: 698, C+36: 199, A36: 136}
+  probability_calibration: {n: 902, F18: 211, F36: 372, B+36: 190, C+36: 49, A36: 72}
+  risk_calibration: {n: 733, F18: 275, F36: 396, B+36: 174, C+36: 49, A36: 59}
+  final_test: {n: 788, F18: 304, F36: 427, B+36: 173, C+36: 41, A36: 75}
+  total: {n: 4234, F18: 1433, F36: 2181, B+36: 1235, C+36: 338, A36: 342}
+
+metrics:
+  primary: average_precision
+  review_budgets: [0.05, 0.10]
+  stakeholder_budget: 0.10
+  descriptive_review_budget: 0.01
+  gate_coverages: [0.50, 0.60, 0.70, 0.80]
+  descriptive_gate_coverages: [0.90, 0.95]
+
+explanations:
+  target: platt_calibrated_log_odds
+  primary_method: grouped_permutation_shap
+  background_sets: 3
+  background_n: 100
+  local_audit_n: 300
+  permutation_orderings: 20
+  approximation_seeds: 3
+  maximum_models_per_family: 10
+  null_attribution_tolerance: 1.0e-10
+  normalization_epsilon: 1.0e-12
+  nacf_denominator_epsilon: 0.05
+
+compute_profiles:
+  smoke:
+    max_configs_per_family: 2
+    selection_seeds: 1
+    bootstrap_refits: 3
+    background_sets: 1
+    background_n: 20
+    local_audit_n: 30
+    permutation_orderings: 4
+    approximation_seeds: 1
+    power_simulations: 50
+    iid_policy_repetitions: 50
+    esrc_reference_panel_refits: 1
+    esrc_permutation_orderings: 4
+    esrc_faithfulness_random_repetitions: 3
+  standard:
+    max_configs_per_family: 8
+    selection_seeds: 2
+    bootstrap_refits: 25
+    background_sets: 2
+    background_n: 75
+    local_audit_n: 150
+    permutation_orderings: 10
+    approximation_seeds: 2
+    power_simulations: 500
+    iid_policy_repetitions: 500
+    esrc_reference_panel_refits: 3
+    esrc_permutation_orderings: 10
+    esrc_faithfulness_random_repetitions: 10
+  full:
+    max_configs_per_family: 24
+    selection_seeds: 3
+    bootstrap_refits: 100
+    background_sets: 3
+    background_n: 100
+    local_audit_n: 300
+    permutation_orderings: 20
+    approximation_seeds: 3
+    power_simulations: 2000
+    iid_policy_repetitions: 1000
+    esrc_reference_panel_refits: 5
+    esrc_permutation_orderings: 20
+    esrc_faithfulness_random_repetitions: 20
+
+endpoint_gates:
+  development_positives_min: 200
+  probability_calibration_positives_min: 50
+  risk_calibration_positives_min: 50
+  final_test_positives_min: 50
+  final_test_positives_preferred: 80
+  development_ap_lift_min: 1.5
+  require_positive_brier_skill: true
+
+selective_risk:
+  rho_S: 0.20
+  rho_C: 0.25
+  rho_F: 0.50
+  rho_Y: 0.20
+  q_min: 0.50
+  familywise_delta: 0.05
+  accepted_calibration_min: 100
+  candidate_acceptance_grid: [0.50, 0.55, 0.60, 0.65, 0.70, 0.75, 0.80, 0.85, 0.90, 0.95]
+  faithfulness_scale_floor: 0.01
+  prediction_outcome: F36

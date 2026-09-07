@@ -1,0 +1,33 @@
+smallest_meaningful_effects:
+  rq1_delta_spec: 0.10
+  rq2_delta_family: 0.10
+  normalized_aopc_improvement: 0.10
+  portfolio_jaccard_change: 0.10
+  gate_relative_loss_reduction: 0.20
+
+inference:
+  confidence_level: 0.95
+  bootstrap_repetitions: 2000
+  bootstrap_seed: 2608261
+  rq1_weighting: audit_stratified_inverse_probability_weighted_equal_configuration_then_startup
+  rq2_weighting: equal_family_pair_then_pair_replicate_then_audit_weighted_startup
+  prediction_equivalence_probability_tolerance: 0.05
+  multiplicity:
+    rq1_confirmatory: holm
+    model_family: holm
+    faithfulness: benjamini_hochberg
+    gates: holm
+    secondary: benjamini_hochberg
+    subgroup: benjamini_hochberg
+
+faithfulness:
+  deletion_steps: [1, 2, 3, 5]
+  random_rank_repetitions: 20
+  conditional_sampler_k_candidates: [10, 20, 30, 50]
+  conditional_sampler_primary_k: 30
+  minimum_top_vs_random_normalized_aopc: 0.10
+
+power:
+  effect_grid: [0.0, 0.05, 0.10, 0.15, 0.20]
+  refit_grid: [50, 75, 100]
+  equivalence_half_width: 0.10
